@@ -24,6 +24,27 @@ def draw_grid(cnv):
         cnv.create_line(x1, y1, x2, y2, width=5, fill='black')
 
 
+def draw_possible_case(cnv, l, c):
+
+    x1 = c * COTE_CASE + COTE_CASE / 2 + 4
+    y1 = l * COTE_CASE + COTE_CASE / 2 + 4
+    x2 = x1 + 10
+    y2 = y1 + 10
+
+    cnv.create_rectangle(x1, y1, x2, y2, fill='red', width=0)
+    cnv.update()
+
+
+def hide_possible_case(cnv, l, c):
+    x1 = c * COTE_CASE + COTE_CASE / 2 + 4
+    y1 = l * COTE_CASE + COTE_CASE / 2 + 4
+    x2 = x1 + 10
+    y2 = y1 + 10
+
+    cnv.create_rectangle(x1, y1, x2, y2, fill='light gray', width=0)
+    cnv.update()
+
+
 def draw_piece_grid(cnv, grid):
 
     for l in range(NB_LINE):
@@ -31,6 +52,14 @@ def draw_piece_grid(cnv, grid):
 
             if grid[l][c] != '_':
                 draw_piece(cnv, l, c, grid[l][c])
+
+
+def remove_piece(cnv, l, c):
+    x = c * (COTE_CASE + LINE_WIDTH / 2) + (COTE_CASE + LINE_WIDTH + 3) / 2
+    y = l * (COTE_CASE + LINE_WIDTH / 2) + (COTE_CASE + LINE_WIDTH + 3) / 2
+    r = COTE_CASE / 2.5
+
+    create_circle(cnv, x, y, r, fill='light gray', width=0)
 
 
 def draw_piece(cnv, l, c, char):

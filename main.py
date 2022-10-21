@@ -22,12 +22,17 @@ cnv2 = Canvas(window, width=4*(COTE_CASE+LINE_WIDTH), height=COTE_CASE)
 cnv1.place(x=1.1 * TAB_GAP + WIDTH_TAB, y=2.5*TAB_GAP)
 cnv2.place(x=1.1 * TAB_GAP + WIDTH_TAB, y=3.5*TAB_GAP)
 
+
 draw_list_pieces(cnv1, cnv2)
 
 grid = [['_' for x in range(NB_COLUMN)] for y in range(NB_LINE)]
 tour = [0]
+list_pos = []
 
-cnv.bind("<Button-1>", lambda event: first_clickcase(event, grid, tour, cnv, cnv1, cnv2))
+#list_pos.
+
+cnv.bind("<Button-1>", lambda event: clickcase(event, grid, tour, list_pos, cnv, cnv1, cnv2))
+# cnv.bind("<Button-1>", lambda event: second_clickcase(event, grid, tour, cnv))
 
 # cnv.bind("<Button-1>", lambda event: click_case(event, grid, tour, cnv))
 # cnv.bind("<Button-1>", click_case)
