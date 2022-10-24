@@ -32,7 +32,9 @@ def toggle_ordi(button_ami, button_ordi, typeGame, cnv_text):
                          font='Helvetica 18 bold')
 
 
-def reset_grid(cnv, grid, tour, typeGame, button_ami, button_ordi, cnv_text):
+def reset_grid(grid, tour, typeGame, button_ami, button_ordi, all_canvas):
+
+    cnv, cnv1, cnv2, cnv_text = all_canvas
 
     for l in range(NB_LINE):
         for c in range(NB_COLUMN):
@@ -41,6 +43,9 @@ def reset_grid(cnv, grid, tour, typeGame, button_ami, button_ordi, cnv_text):
     tour[0] = 0
     print("okk")
     draw_grid(cnv)
+    draw_list_pieces(cnv1, cnv2)
+    cnv1.config(width=4*(COTE_CASE+LINE_WIDTH))
+    cnv2.config(width=4 * (COTE_CASE + LINE_WIDTH))
     # cnv.update()
 
     if button_ordi.config('relief')[-1] == 'sunken':

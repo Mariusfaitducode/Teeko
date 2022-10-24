@@ -2,7 +2,9 @@ from constante import *
 import affichage
 
 
-def clickcase(event, grid, tour, list_pos, cnv, cnv1, cnv2):
+def clickcase(event, grid, tour, list_pos, all_canvas):
+
+    cnv, cnv1, cnv2, cnv_text = all_canvas
 
     if tour[0] < 8:
         ligne = int(event.y / (HEIGHT_TAB/NB_LINE))

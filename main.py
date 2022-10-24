@@ -24,17 +24,17 @@ cnv2.place(x=1.1 * TAB_GAP + WIDTH_TAB, y=3.5*TAB_GAP)
 
 
 button_ami = Button(text="Contre un ami", font='Helvetica 15 bold', background='light gray',
-                    command=(lambda:button.toggle_ami(button_ami, button_ordi, typeGame, cnv_text)))
+                    command=(lambda: button.toggle_ami(button_ami, button_ordi, typeGame, cnv_text)))
 
 button_ami.place(x=1.7 * TAB_GAP + WIDTH_TAB, y=1.7 * TAB_GAP)
 
 button_ordi = Button(text="Contre l'ordi", font='Helvetica 15 bold', background='light gray',
-                     command=(lambda:button.toggle_ordi(button_ami, button_ordi, typeGame, cnv_text)))
+                     command=(lambda: button.toggle_ordi(button_ami, button_ordi, typeGame, cnv_text)))
 
 button_ordi.place(x=3.5 * TAB_GAP + WIDTH_TAB, y=1.7 * TAB_GAP)
 
 button_reset = Button(window, text="reset", font='Helvetica 15 bold', background='light gray',
-                      command=(lambda: button.reset_grid(cnv, grid, tour, typeGame, button_ami, button_ordi, cnv_text)))
+                      command=(lambda: button.reset_grid(grid, tour, typeGame, button_ami, button_ordi, all_canvas)))
 
 button_reset.place(x=1.7 * TAB_GAP + WIDTH_TAB, y=5 * TAB_GAP)
 
@@ -54,9 +54,10 @@ tour = [0]
 list_pos = []
 typeGame = [NO_GAME]
 
-#list_pos.
+all_canvas = cnv, cnv1, cnv2, cnv_text
 
-cnv.bind("<Button-1>", lambda event: clickcase(event, grid, tour, list_pos, cnv, cnv1, cnv2))
+
+cnv.bind("<Button-1>", lambda event: clickcase(event, grid, tour, list_pos, all_canvas))
 # cnv.bind("<Button-1>", lambda event: second_clickcase(event, grid, tour, cnv))
 
 # cnv.bind("<Button-1>", lambda event: click_case(event, grid, tour, cnv))
