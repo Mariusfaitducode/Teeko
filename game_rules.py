@@ -61,8 +61,6 @@ def clickcase(event, grid, tour, list_pos, cnv, cnv1, cnv2):
             list_pos.clear()
 
 
-
-
 def move_the_piece(ligne, colonne, list_case, last_case, grid, tour, cnv):
 
     last_l, last_c = last_case

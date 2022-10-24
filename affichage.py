@@ -3,7 +3,7 @@ from constante import *
 
 def draw_grid(cnv):
     # Dessin plateau
-    cnv.create_rectangle(0, 0, WIDTH_TAB,HEIGHT_TAB, fill="")
+    cnv.create_rectangle(0, 0, WIDTH_TAB, HEIGHT_TAB, fill="light gray")
 
     for i in range(0, NB_COLUMN + 1):
 
