@@ -1,4 +1,4 @@
-from constante import *
+from game_rules import *
 
 
 def draw_grid(cnv):
@@ -83,6 +83,17 @@ def draw_list_pieces(cnv1, cnv2):
     for c in range(4):
         draw_piece(cnv1, 0, c, 'x')
         draw_piece(cnv2, 0, c, 'o')
+
+
+def disp_win(tour, cnv_text):
+    if pion_tour(tour) == 'o':
+        cnv_text.delete('all')
+        cnv_text.create_text(COTE_CASE * 1.5, COTE_CASE / 2, text="Black win !", fill="black",
+                             font='Helvetica 18 bold')
+    else:
+        cnv_text.delete('all')
+        cnv_text.create_text(COTE_CASE * 1.5, COTE_CASE / 2, text="White win !", fill="black",
+                             font='Helvetica 18 bold')
 
 
 

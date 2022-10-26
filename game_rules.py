@@ -23,6 +23,7 @@ def clickcase(event, grid, tour, list_pos, all_canvas):
 
             if victory.victoire_with_case(ligne, colonne, grid):
                 print(f'Victoire, {pion_tour(tour[0])} ')
+                affichage.disp_win(tour[0], cnv_text)
             else:
                 tour[0] += 1
 
@@ -49,6 +50,11 @@ def clickcase(event, grid, tour, list_pos, all_canvas):
         if (ligne, colonne) in list_case:
 
             move_the_piece(ligne, colonne, list_case, last_case, grid, tour, cnv)
+            if victory.victoire_with_case(ligne, colonne, grid):
+                print(f'Victoire, {pion_tour(tour[0])} ')
+                affichage.disp_win(tour[0], cnv_text)
+            else:
+                tour[0] += 1
             list_pos.clear()
 
         elif grid[ligne][colonne] == pion_tour(tour[0]):
@@ -81,10 +87,7 @@ def move_the_piece(ligne, colonne, list_case, last_case, grid, tour, cnv):
 
     hide_case(list_case, cnv)
 
-    if victory.victoire_with_case(ligne, colonne, grid):
-        print(f'Victoire, {pion_tour(tour[0])} ')
-    else:
-        tour[0] += 1
+
 
 """
 def show_case(l, c, grid, cnv):

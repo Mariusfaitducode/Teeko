@@ -1,6 +1,5 @@
 import math
 
-from constante import *
 from game_rules import *
 
 
