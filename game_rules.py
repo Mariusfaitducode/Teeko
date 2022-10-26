@@ -33,7 +33,7 @@ def clickcase(event, grid, tour, list_pos, all_canvas):
         if grid[ligne][colonne] == pion_tour(tour[0]):
 
             list_pos.append((ligne, colonne))
-            list_pos.append(show_case(ligne, colonne, grid, cnv))
+            list_pos.append(possibility_case(ligne, colonne, grid, cnv))
 
     else:
         print("second")
@@ -55,7 +55,7 @@ def clickcase(event, grid, tour, list_pos, all_canvas):
             hide_case(list_case, cnv)
             list_pos.clear()
             list_pos.append((ligne, colonne))
-            list_pos.append(show_case(ligne, colonne, grid, cnv))
+            list_pos.append(possibility_case(ligne, colonne, grid, cnv))
             cnv.update()
 
         else:
@@ -85,7 +85,7 @@ def move_the_piece(ligne, colonne, list_case, last_case, grid, tour, cnv):
     else:
         tour[0] += 1
 
-
+"""
 def show_case(l, c, grid, cnv):
 
     list_pos = []
@@ -102,6 +102,18 @@ def show_case(l, c, grid, cnv):
             affichage.draw_possible_case(cnv, l, c + i)
             list_pos.append((l, c+i))
 
+    return list_pos"""
+
+
+def possibility_case(l, c, grid, cnv):
+
+    list_pos = []
+    for i in range(l-1, l+2):
+        for j in range(c-1, c+2):
+
+            if 0 <= i < NB_LINE and 0 <= j < NB_COLUMN and grid[i][j] == '_':
+                affichage.draw_possible_case(cnv, i, j)
+                list_pos.append((i, j))
     return list_pos
 
 
