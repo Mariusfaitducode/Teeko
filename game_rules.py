@@ -1,5 +1,6 @@
 from constante import *
 import affichage
+import victory
 
 
 def clickcase(event, grid, tour, list_pos, all_canvas):
@@ -20,7 +21,7 @@ def clickcase(event, grid, tour, list_pos, all_canvas):
             else:
                 cnv2.config(width=(3-int(tour[0]/2))*(COTE_CASE+LINE_WIDTH))
 
-            if victoire(grid, tour[0]):
+            if victory.victoire_with_case(ligne, colonne, grid):
                 print(f'Victoire, {pion_tour(tour[0])} ')
             else:
                 tour[0] += 1
@@ -80,7 +81,7 @@ def move_the_piece(ligne, colonne, list_case, last_case, grid, tour, cnv):
 
     hide_case(list_case, cnv)
 
-    if victoire(grid, tour[0]):
+    if victory.victoire_with_case(ligne, colonne, grid):
         print(f'Victoire, {pion_tour(tour[0])} ')
     else:
         tour[0] += 1
@@ -134,44 +135,4 @@ def pion_tour(tour):
         return 'o'
 
 
-def victoire(grid, tour):
 
-    for i in range(0, NB_LINE):
-        for z in range(0, NB_COLUMN-3):
-            compte = 0
-            for j in range(z, z+4):
-
-                if grid[i][j] == pion_tour(tour):
-                    compte = compte + 1
-                    if compte == 4:
-                        return True
-
-    for j in range(0, NB_COLUMN):
-        for z in range(0, NB_LINE-3):
-            compte = 0
-            for i in range(z, z+4):
-                if grid[i][j] == pion_tour(tour):
-                    compte = compte + 1
-                    if compte == 4:
-                        return True
-
-    for z in range(0, NB_LINE-3):
-        for y in range(0, NB_COLUMN-3):
-            compte = 0
-            for x in range(0, 4):
-                l = z + x
-                c = y + x
-                if grid[l][c] == pion_tour(tour):
-                    compte = compte + 1
-                    if compte == 4:
-                        return True
-
-    for y in range(NB_LINE-1, NB_LINE-3, -1):
-        for z in range(0, 2):
-            compte = 0
-            for i in range(y, y-4, -1):
-                j = y - i + z
-                if grid[i][j] == pion_tour(tour):
-                    compte = compte + 1
-                    if compte == 4:
-                        return True
