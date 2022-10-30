@@ -24,14 +24,14 @@ def draw_grid(cnv):
         cnv.create_line(x1, y1, x2, y2, width=5, fill='black')
 
 
-def draw_possible_case(cnv, l, c):
+def draw_possible_case(cnv, l, c, colour):
 
     x1 = c * COTE_CASE + COTE_CASE / 2 + 4
     y1 = l * COTE_CASE + COTE_CASE / 2 + 4
     x2 = x1 + 10
     y2 = y1 + 10
 
-    cnv.create_rectangle(x1, y1, x2, y2, fill='red', width=0)
+    cnv.create_rectangle(x1, y1, x2, y2, fill=colour, width=0)
     cnv.update()
 
 
