@@ -68,9 +68,14 @@ def clickcase(event, grid, tour, list_pos, all_canvas):
             else:
                 tour[0] += 1
                 # Coup de l'ordinateur
-                ia.choix_case(grid, tour[0], cnv)
+                l, c = ia.choix_case(grid, tour[0], cnv)
 
-
+                if victory.victoire_with_case(l, c, grid):
+                    print(f'Victoire, {pion_tour(tour[0])} ')
+                    affichage.disp_win(tour[0], cnv_text)
+                else:
+                    tour[0] += 1
+                    cnv.update()
 
             list_pos.clear()
 
