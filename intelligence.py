@@ -12,6 +12,7 @@ def choix_case(grid, tour, cnv):
     max = -1000
     final_coup = None
     final_piece = None
+    list_pos = []
 
     ordi = Player(grid, game.pion_tour(tour))
     adversaire = Player(grid, game.pion_tour(tour + 1))
@@ -29,7 +30,7 @@ def choix_case(grid, tour, cnv):
         for coup in list_coup:
             (l, c) = coup
             affichage.draw_possible_case(cnv, l, c, "blue")
-
+            list_pos.append((l,c))
 
             move_the_piece(coup, piece, grid, ordi)
 
@@ -44,8 +45,10 @@ def choix_case(grid, tour, cnv):
                 final_piece = piece
 
     move_the_piece(final_coup, final_piece, grid, ordi)
+    game.hide_case(list_pos, cnv)
     affichage.remove_piece(cnv, final_piece[0], final_piece[1])
     affichage.draw_piece(cnv, final_coup[0], final_coup[1], ordi.token)
+
     return final_coup
 
 

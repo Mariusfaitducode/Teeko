@@ -57,7 +57,7 @@ typeGame = [NO_GAME]
 all_canvas = cnv, cnv1, cnv2, cnv_text
 
 
-cnv.bind("<Button-1>", lambda event: clickcase(event, grid, tour, list_pos, all_canvas))
+cnv.bind("<Button-1>", lambda event: clickcase(event, grid, tour, list_pos, all_canvas, typeGame))
 # cnv.bind("<Button-1>", lambda event: second_clickcase(event, grid, tour, cnv))
 
 # cnv.bind("<Button-1>", lambda event: click_case(event, grid, tour, cnv))
