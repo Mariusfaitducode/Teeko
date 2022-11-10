@@ -1,6 +1,4 @@
 import random
-
-
 from constante import *
 import affichage
 import game_rules as game
@@ -20,39 +18,45 @@ def choix_case(grid, tour, cnv):
     print(ordi.list_pieces)
     print(ordi.token, adversaire.token)
 
-    choice_list = list_all_cases(grid, ordi)
+    if tour < 8:
 
-    for coup_piece in choice_list:
+        print("beginning")
 
-        piece, list_coup = coup_piece
-        # last_l, last_c = piece
+    else:
 
-        for coup in list_coup:
-            (l, c) = coup
-            affichage.draw_possible_case(cnv, l, c, "blue")
-            list_pos.append((l,c))
+        choice_list = list_all_cases(grid, ordi)
 
-            move_the_piece(coup, piece, grid, ordi)
+        for coup_piece in choice_list:
 
-            score = minimax(grid, tour + 1, 3, coup, ordi, adversaire)
-            print(score)
+            piece, list_coup = coup_piece
+            # last_l, last_c = piece
 
-            move_the_piece(piece, coup, grid, ordi)
+            for coup in list_coup:
+                (l, c) = coup
+                affichage.draw_possible_case(cnv, l, c, "blue")
+                list_pos.append((l,c))
 
-            if score > max:
-                max = score
-                final_coup = coup
-                final_piece = piece
+                move_the_piece(coup, piece, grid, ordi)
 
-    move_the_piece(final_coup, final_piece, grid, ordi)
-    game.hide_case(list_pos, cnv)
-    affichage.remove_piece(cnv, final_piece[0], final_piece[1])
-    affichage.draw_piece(cnv, final_coup[0], final_coup[1], ordi.token)
+                score = minimax(grid, tour + 1, 3, coup, ordi, adversaire, -1000, 1000)
+                print(score)
 
-    return final_coup
+                move_the_piece(piece, coup, grid, ordi)
+
+                if score > max:
+                    max = score
+                    final_coup = coup
+                    final_piece = piece
+
+        move_the_piece(final_coup, final_piece, grid, ordi)
+        game.hide_case(list_pos, cnv)
+        affichage.remove_piece(cnv, final_piece[0], final_piece[1])
+        affichage.draw_piece(cnv, final_coup[0], final_coup[1], ordi.token)
+
+        return final_coup
 
 
-def minimax(grid, tour, profondeur, last_case, ordi, adversaire):
+def minimax_alpha_beta(grid, tour, profondeur, last_case, ordi, adversaire, alpha, beta):
 
     max = None
     (l, c) = last_case
@@ -85,12 +89,18 @@ def minimax(grid, tour, profondeur, last_case, ordi, adversaire):
 
                     move_the_piece(coup, piece, grid, ordi)
 
-                    score = minimax(grid, tour + 1, profondeur - 1, coup, ordi, adversaire)
+                    score = minimax_alpha_beta(grid, tour + 1, profondeur - 1, coup, ordi, adversaire, alpha, beta)
 
                     move_the_piece(piece, coup, grid, ordi)
 
                     if score > max:
                         max = score
+
+                    if score >= beta:
+                        return score
+
+                    if score > alpha:
+                        alpha = score
 
         elif game.pion_tour(tour) == adversaire.token:
 
@@ -107,17 +117,20 @@ def minimax(grid, tour, profondeur, last_case, ordi, adversaire):
 
                     move_the_piece(coup, piece, grid, adversaire)
 
-                    score = minimax(grid, tour + 1, profondeur - 1, coup, ordi, adversaire)
+                    score = minimax_alpha_beta(grid, tour + 1, profondeur - 1, coup, ordi, adversaire, alpha, beta)
 
                     move_the_piece(piece, coup, grid, adversaire)
 
                     if score < max:
                         max = score
 
+                    if score <= alpha:
+                        return score
+
+                    if score < beta:
+                        beta = score
+
     return max
-
-
-
 
 
 def move_the_piece(coup, last_case, grid, player):
