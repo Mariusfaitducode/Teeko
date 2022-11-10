@@ -2,6 +2,7 @@ from constante import *
 import affichage
 import victory
 import intelligence as ia
+import time
 
 
 def clickcase(event, grid, tour, list_pos, all_canvas, typeGame):
@@ -69,10 +70,17 @@ def clickcase(event, grid, tour, list_pos, all_canvas, typeGame):
                     affichage.disp_win(tour[0], cnv_text)
                 else:
                     tour[0] += 1
+
                     # Coup de l'ordinateur
 
                     if typeGame[0] == ORDI:
+
+                        tps1 = time.time()
+
                         l, c = ia.choix_case(grid, tour[0], cnv)
+
+                        tps2 = time.time()
+                        print("time = ", tps2 - tps1)
 
                         if victory.victoire_with_case(l, c, grid):
                             print(f'Victoire, {pion_tour(tour[0])} ')

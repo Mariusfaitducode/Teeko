@@ -38,7 +38,7 @@ def choix_case(grid, tour, cnv):
 
                 move_the_piece(coup, piece, grid, ordi)
 
-                score = minimax(grid, tour + 1, 3, coup, ordi, adversaire, -1000, 1000)
+                score = minimax_alpha_beta(grid, tour + 1, 4, coup, ordi, adversaire, -1000, 1000)
                 print(score)
 
                 move_the_piece(piece, coup, grid, ordi)
