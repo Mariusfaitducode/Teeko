@@ -22,7 +22,7 @@ def victoire_with_case(ligne, colonne, grid):
                     if count >= 4:
                         return True
                     if len(list_carre) == 3:
-                        print("carre :")
+                        # print("carre :")
                         x, y = width_length_piece(list_carre, ligne, colonne)
 
                         if norme_vect(x, y) == math.sqrt(8):
