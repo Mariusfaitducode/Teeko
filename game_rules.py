@@ -32,8 +32,29 @@ def clickcase(event, grid, tour, list_pos, all_canvas, typeGame):
                     affichage.disp_win(tour[0], cnv_text)
                 else:
                     tour[0] += 1
-                    # Coup de l'ordinateur
-                    # ia.list_all_cases(grid, tour[0])
+
+                    if typeGame[0] == ORDI:
+
+                        tps1 = time.time()
+
+                        l, c = ia.choix_case(grid, tour[0], cnv)
+
+                        tps2 = time.time()
+                        print("time = ", tps2 - tps1)
+
+                        if pion == 'x':
+                            cnv2.config(width=(3 - int(tour[0] / 2)) * (COTE_CASE + LINE_WIDTH))
+                        else:
+                            cnv1.config(width=(3 - int(tour[0] / 2)) * (COTE_CASE + LINE_WIDTH))
+
+                        if victory.victoire_with_case(l, c, grid):
+                            print(f'Victoire, {pion_tour(tour[0])} ')
+                            affichage.disp_win(tour[0], cnv_text)
+                        else:
+                            tour[0] += 1
+                            cnv.update()
+
+
 
         # Deuxième partie
         # Click sur la case qu'on veut déplacer
