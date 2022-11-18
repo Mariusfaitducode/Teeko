@@ -114,7 +114,7 @@ def minimax_alpha_beta(grid, tour, profondeur, last_case, ordi, adversaire, alph
             if game.pion_tour(tour) == ordi.token:
                 #print("ok")
 
-                max = -10000
+                max = -1000
 
                 choice_list = list_all_cases(grid, ordi)
                 #print(choice_list)
@@ -144,7 +144,7 @@ def minimax_alpha_beta(grid, tour, profondeur, last_case, ordi, adversaire, alph
 
             elif game.pion_tour(tour) == adversaire.token:
 
-                max = 10000
+                max = 1000
 
                 choice_list = list_all_cases(grid, adversaire)
 
@@ -173,7 +173,7 @@ def minimax_alpha_beta(grid, tour, profondeur, last_case, ordi, adversaire, alph
         else:
             if game.pion_tour(tour) == ordi.token:
 
-                max = -1001
+                max = -1000
 
                 choice_list = list_first_cases(grid, adversaire, ordi)
 
