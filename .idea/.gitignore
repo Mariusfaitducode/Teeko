@@ -1,4 +1,10 @@
 # Default ignored files
+
+__pycache__/
+*.pyc
+
+
 /shelf/
-.xml
-/*.py[oc]
+
+*.xml
+*.iml
