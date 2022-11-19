@@ -19,8 +19,8 @@ draw_grid(cnv)
 cnv1 = Canvas(window, width=4*(COTE_CASE+LINE_WIDTH), height=COTE_CASE)
 cnv2 = Canvas(window, width=4*(COTE_CASE+LINE_WIDTH), height=COTE_CASE)
 
-cnv1.place(x=1.1 * TAB_GAP + WIDTH_TAB, y=2.5*TAB_GAP)
-cnv2.place(x=1.1 * TAB_GAP + WIDTH_TAB, y=3.5*TAB_GAP)
+cnv1.place(x=1.1 * TAB_GAP + WIDTH_TAB, y=3.5*TAB_GAP)
+cnv2.place(x=1.1 * TAB_GAP + WIDTH_TAB, y=4.5*TAB_GAP)
 
 
 button_ami = Button(text="Contre un ami", font='Helvetica 15 bold', background='light gray',
@@ -33,10 +33,15 @@ button_ordi = Button(text="Contre l'ordi", font='Helvetica 15 bold', background=
 
 button_ordi.place(x=3.5 * TAB_GAP + WIDTH_TAB, y=1.7 * TAB_GAP)
 
-button_reset = Button(window, text="reset", font='Helvetica 15 bold', background='light gray',
+button_reset = Button(window, text="reset", font='Helvetica 15 bold', background='yellow',
                       command=(lambda: button.reset_grid(grid, tour, typeGame, button_ami, button_ordi, all_canvas)))
 
-button_reset.place(x=1.7 * TAB_GAP + WIDTH_TAB, y=5 * TAB_GAP)
+button_reset.place(x=1.7 * TAB_GAP + WIDTH_TAB, y=2.9 * TAB_GAP)
+
+button_ordi_ordi = Button(text="Ordi contre ordi", font='Helvetica 15 bold', background='light gray',
+                          command=(lambda: button.ordi_vs_ordi(grid, tour, cnv)))
+
+button_ordi_ordi.place(x=1.7 * TAB_GAP + WIDTH_TAB, y=2.3 * TAB_GAP)
 
 
 cnv_text = Canvas(window, width=4 * COTE_CASE, height=0.8*COTE_CASE)

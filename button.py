@@ -1,5 +1,6 @@
 from constante import *
 from affichage import *
+import intelligence as ia
 
 
 def toggle_ami(button_ami, button_ordi, typeGame, cnv_text):
@@ -59,3 +60,22 @@ def reset_grid(grid, tour, typeGame, button_ami, button_ordi, all_canvas):
         cnv_text.delete('all')
         cnv_text.create_text(COTE_CASE * 2, COTE_CASE / 2, text="Let's play !", fill="black",
                              font='Helvetica 18 bold')
+
+
+def ordi_vs_ordi(grid, tour, cnv):
+
+    l, c = None, None
+    not_finished = True
+
+    while not_finished:
+
+        l, c = ia.choix_case(grid, tour[0], cnv)
+
+        if victory.victoire_with_case(l, c, grid):
+            print(f'Victoire, {pion_tour(tour[0])} ')
+            not_finished = False
+            # affichage.disp_win(tour[0], cnv_text)
+        else:
+            tour[0] += 1
+            cnv.update()
+

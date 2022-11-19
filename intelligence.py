@@ -11,6 +11,7 @@ def choix_case(grid, tour, cnv):
     final_coup = None
     final_piece = None
     list_pos = []
+    list_egality = []
 
     ordi = Player(grid, game.pion_tour(tour))
     adversaire = Player(grid, game.pion_tour(tour + 1))
@@ -41,20 +42,23 @@ def choix_case(grid, tour, cnv):
                 grid[l][c] = ordi.token
                 ordi.add_piece(coup)
 
-                score = minimax_alpha_beta(grid, tour + 1, 4, coup, ordi, adversaire, -1000, 1000)
+                score = minimax_alpha_beta(grid, tour + 1, 4, coup, ordi, adversaire, -1000, 1000, [0])
                 print(score)
 
                 grid[l][c] = '_'
                 ordi.remove_piece(coup)
+
+                if score == 0:
+                    list_egality.append(coup)
 
                 if score > max:
                     max = score
                     final_coup = coup
 
             grid[final_coup[0]][final_coup[1]] = ordi.token
+            game.hide_case(list_pos, cnv)
             affichage.draw_piece(cnv, final_coup[0], final_coup[1], ordi.token)
 
-            game.hide_case(list_pos, cnv)
             return final_coup
 
     else:
@@ -64,6 +68,7 @@ def choix_case(grid, tour, cnv):
         for coup_piece in choice_list:
 
             piece, list_coup = coup_piece
+            list_tmp = []
             # last_l, last_c = piece
 
             for coup in list_coup:
@@ -73,15 +78,26 @@ def choix_case(grid, tour, cnv):
 
                 move_the_piece(coup, piece, grid, ordi)
 
-                score = minimax_alpha_beta(grid, tour + 1, 4, coup, ordi, adversaire, -1000, 1000)
-                print(score)
+                count_vic = [0]
+
+                score = minimax_alpha_beta(grid, tour + 1, 4, coup, ordi, adversaire, -1000, 1000, count_vic)
+                print(score, count_vic[0])
 
                 move_the_piece(piece, coup, grid, ordi)
+
+                if score == 0:
+                    list_tmp.append(coup)
 
                 if score > max:
                     max = score
                     final_coup = coup
                     final_piece = piece
+
+            list_egality.append((piece, list_tmp))
+
+        #if max == 0:
+
+
 
         move_the_piece(final_coup, final_piece, grid, ordi)
         game.hide_case(list_pos, cnv)
@@ -91,7 +107,29 @@ def choix_case(grid, tour, cnv):
         return final_coup
 
 
-def minimax_alpha_beta(grid, tour, profondeur, last_case, ordi, adversaire, alpha, beta):
+"""
+def closest_win(list_coup, grid, ordi):
+    
+    not_finished = True
+    
+    while not_finished:
+
+        for coup_piece in list_coup:
+
+            piece, list_coup = coup_piece
+            list_tmp = []
+            # last_l, last_c = piece
+
+            for coup in list_coup:
+                
+                move_the_piece(coup, piece, grid, ordi)
+
+                
+
+                move_the_piece(piece, coup, grid, ordi)"""
+
+
+def minimax_alpha_beta(grid, tour, profondeur, last_case, ordi, adversaire, alpha, beta, count_vic):
 
     max = None
     (l, c) = last_case
@@ -100,9 +138,12 @@ def minimax_alpha_beta(grid, tour, profondeur, last_case, ordi, adversaire, alph
 
         if game.pion_tour(tour-1) == adversaire.token:  # defaite
 
+            count_vic[0] -= 1
             return -100 - profondeur * 10
 
         else:
+
+            count_vic[0] += 1
             return 100 + profondeur * 10
 
     elif profondeur < 0:
@@ -128,7 +169,7 @@ def minimax_alpha_beta(grid, tour, profondeur, last_case, ordi, adversaire, alph
 
                         move_the_piece(coup, piece, grid, ordi)
 
-                        score = minimax_alpha_beta(grid, tour + 1, profondeur - 1, coup, ordi, adversaire, alpha, beta)
+                        score = minimax_alpha_beta(grid, tour + 1, profondeur - 1, coup, ordi, adversaire, alpha, beta, count_vic)
                         #print("ok")
 
                         move_the_piece(piece, coup, grid, ordi)
@@ -157,7 +198,7 @@ def minimax_alpha_beta(grid, tour, profondeur, last_case, ordi, adversaire, alph
 
                         move_the_piece(coup, piece, grid, adversaire)
 
-                        score = minimax_alpha_beta(grid, tour + 1, profondeur - 1, coup, ordi, adversaire, alpha, beta)
+                        score = minimax_alpha_beta(grid, tour + 1, profondeur - 1, coup, ordi, adversaire, alpha, beta, count_vic)
 
                         move_the_piece(piece, coup, grid, adversaire)
 
@@ -185,7 +226,7 @@ def minimax_alpha_beta(grid, tour, profondeur, last_case, ordi, adversaire, alph
                     ordi.add_piece(coup)
 
                     score = minimax_alpha_beta(grid, tour + 1, profondeur - 1, coup, ordi, adversaire,
-                                                           alpha, beta)
+                                                           alpha, beta, count_vic)
                     grid[l][c] = '_'
                     ordi.remove_piece(coup)
 
@@ -211,7 +252,7 @@ def minimax_alpha_beta(grid, tour, profondeur, last_case, ordi, adversaire, alph
                     adversaire.add_piece(coup)
 
                     score = minimax_alpha_beta(grid, tour + 1, profondeur - 1, coup, ordi, adversaire,
-                                                           alpha, beta)
+                                                           alpha, beta, count_vic)
 
                     grid[l][c] = '_'
                     adversaire.remove_piece(coup)
@@ -228,98 +269,7 @@ def minimax_alpha_beta(grid, tour, profondeur, last_case, ordi, adversaire, alph
 
     return max
 
-"""
-def minimax_alpha_beta_first_coups(grid, tour, profondeur, last_case, ordi, adversaire, alpha, beta):
-    max = None
-    #print(tour)
 
-    if tour >= 8:
-        #print(grid)
-        #ordi.actu_list_pieces(grid)
-        #print(ordi.list_pieces)
-        #print(adversaire.list_pieces)
-        #adversaire.actu_list_pieces(grid)
-
-        score = minimax_alpha_beta(grid, tour, 1, last_case, ordi, adversaire, -100000, 100000)
-
-        #ordi.vide_list_pieces()
-        #adversaire.vide_list_pieces()
-        #print("x = ",score)
-        return score
-    else:
-
-        (l, c) = last_case
-
-        if game.victory.victoire_with_case(l, c, grid):
-
-            if game.pion_tour(tour - 1) == adversaire.token:  # defaite
-
-                return -100 - profondeur * 10
-
-            else:
-                return 100 + profondeur * 10
-
-        elif profondeur < 0:
-            return 0
-
-        else:
-            if game.pion_tour(tour) == ordi.token:
-
-                max = -1001
-
-                choice_list = list_first_cases(grid, adversaire)
-
-                for coup in choice_list:
-
-                    (l, c) = coup
-
-                    grid[l][c] = ordi.token
-                    ordi.add_piece(coup)
-
-                    score = minimax_alpha_beta_first_coups(grid, tour + 1, profondeur - 1, coup, ordi, adversaire,
-                                                           alpha, beta)
-                    grid[l][c] = '_'
-                    ordi.remove_piece(coup)
-
-                    if score > max:
-                        max = score
-
-                    if score >= beta:
-                        return score
-
-                    if score > alpha:
-                        alpha = score
-
-            elif game.pion_tour(tour) == adversaire.token:
-
-                max = 1000
-
-                choice_list = list_first_cases(grid, ordi)
-
-                for coup in choice_list:
-
-                    l, c = coup
-                    grid[l][c] = adversaire.token
-                    adversaire.add_piece(coup)
-
-                    score = minimax_alpha_beta_first_coups(grid, tour + 1, profondeur - 1, coup, ordi, adversaire,
-                                                           alpha, beta)
-
-                    grid[l][c] = '_'
-                    adversaire.remove_piece(coup)
-                    # print(score)
-
-                    if score < max:
-                        max = score
-
-                    if score <= alpha:
-                        return score
-
-                    if score < beta:
-                        beta = score
-        return max"""
-
-    
 def move_the_piece(coup, last_case, grid, player):
 
     ligne, colonne = coup
@@ -380,24 +330,6 @@ def list_first_cases(grid, adversaire, ordi):
                 if j not in list:
                     list.append(j)
     else:
-        list.append((3, 3))
+        list.append((2, 2))
 
     return list
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
