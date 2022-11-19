@@ -86,7 +86,8 @@ def choix_case(grid, tour, cnv):
                 move_the_piece(piece, coup, grid, ordi)
 
                 if score == 0:
-                    list_tmp.append(coup)
+                    list_tmp.append((coup, count_vic[0]))
+                    # print(list_tmp)
 
                 if score > max:
                     max = score
@@ -95,9 +96,22 @@ def choix_case(grid, tour, cnv):
 
             list_egality.append((piece, list_tmp))
 
-        #if max == 0:
+        if max == 0:
+            print("ok")
 
+            max2 = -10000
 
+            for coup_piece in list_egality:
+
+                piece, list_coup = coup_piece
+
+                for all in list_coup:
+                    coup, count = all
+
+                    if count > max2:
+                        max2 = count
+                        final_coup = coup
+                        final_piece = piece
 
         move_the_piece(final_coup, final_piece, grid, ordi)
         game.hide_case(list_pos, cnv)
